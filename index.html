@@ -4,7 +4,75 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Neumorphic Button Only</title>
+    <title>Ultimate Almighty for guide</title>
+    <script>
+(function(){
+  const el = document.getElementById('hourlyText');
+  const status = document.getElementById('status');
+
+  // 元の色（読み取り時点の computed style を保存）
+  const originalColor = getComputedStyle(el).color;
+
+  // 現在「クリックで戻せる」状態かを示すフラグ
+  let canRevert = false;
+  // クリックイベントハンドラ（ワンタイム）
+  function oneClickRevert() {
+    if (!canRevert) return;
+    el.style.color = originalColor;
+    canRevert = false;
+    // クリックは一度だけ有効にする → ハンドラは残すがフラグで制御
+    status.textContent = 'ユーザーがクリックして元の色に戻しました。次の毎時0分で再び色が変わります。';
+  }
+
+  el.addEventListener('click', oneClickRevert);
+
+  // 毎時0分に呼ばれる関数（色を変えてクリックで戻せる状態にする）
+  function applyHourlyColor() {
+    const newColor = E8CD7D;
+    el.style.color = newColor;
+    canRevert = true;
+    const now = new Date();
+    status.textContent = `色を変更しました（${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}）。クリックで元に戻せます。`;
+  }
+
+  // 次の「毎時0分」までのミリ秒を計算
+  function msUntilNextTopOfHour() {
+    const now = new Date();
+    // 次のトップ・オブ・アワー（分=0,秒=0,ms=0）
+    const next = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0, 0);
+    return next - now;
+  }
+
+  // 初回セットアップ：
+  (function scheduleFirstChange(){
+    const now = new Date();
+    // もし「すでに top-of-hour の瞬間（分=0）なら即時発火」
+    if (now.getMinutes() === 39 && now.getSeconds() === 0) {
+      applyHourlyColor();
+    } else {
+      // 次の top-of-hour に到達したら色変更、その後は毎時実行
+      const delay = msUntilNextTopOfHour();
+      status.textContent = `次の色変更は ${new Date(Date.now() + delay).toLocaleString()} です。`;
+      // setTimeout で最初の発火をスケジュールし、発火後に setInterval を開始する
+      setTimeout(() => {
+        applyHourlyColor();
+        // 以降は1時間ごと（3600000 ms）に呼ぶ
+        setInterval(applyHourlyColor, 60 * 60 * 1000);
+      }, delay);
+    }
+
+    // もし今が top-of-hour で即時発火させたなら、以降の setInterval も開始する
+    if (now.getMinutes() === 41 && now.getSeconds() === 0) {
+      // 次回はちょうど1時間後
+      setInterval(applyHourlyColor, 60 * 60 * 1000);
+      status.textContent = `色を即時変更しました（${now.toLocaleString()}）。次は1時間後です。`;
+    }
+  })();
+
+  // --- 補助（デバッグ用にコンソールに表示） ---
+  console.log('originalColor:', originalColor);
+})();
+</script>
     <style>
         :root {
             --bg: #eef6f6;
@@ -69,35 +137,53 @@
 
         }
 
-        @media (max-width:900px) {
+        @media (min-width:701px) and (max-width: 1200px) {
             .container {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 24px;
                 padding: 32px;
             }
         }
-        .header-box{
-margin-top:20px;
-margin-bottom:20px;
-padding:22px 48px;
-border-radius:40px;
-font-size:28px;
-font-weight:700;
-text-align:center;
-color:var(--muted);
-background: linear-gradient(180deg, #f7fbfb, #f0f6f6);
-box-shadow: 12px 12px 24px rgba(0,0,0,0.12), -8px -8px 18px rgba(255,255,255,0.95);
-border:1px solid rgba(0,0,0,0.02);
-width:fit-content;
-margin-left:auto;
-margin-right:auto;
-}
 
+        @media (max-width:700px) {
+            .container {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 24px;
+                padding: 32px;
+            }
+        }
+
+        .header-box {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 22px 48px;
+            border-radius: 40px;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--muted);
+            background: linear-gradient(180deg, #f7fbfb, #f0f6f6);
+            box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.12), -8px -8px 18px rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hourly-text {
+            font-size: 1.6rem;
+            line-height: 1.5;
+            transition: color 0.5s ease;
+            /* 滑らかな色変化 */
+            cursor: pointer;
+            /* クリック可能であることを示す */
+            user-select: none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="header-box">Guide Menu</div>
+    <div class="header-box">Ultimate Almighty for guide</div>
     <div class="wcontainer">
         <div class="container">
             <button class="big-btn"><a href="https://docs.google.com/document/d/1CKngeN0fH1HIMq9Kzo2bHrSYnxzN3QBcgnOjU2zRURQ/edit?tab=t.0#heading=h.bn6nydyv4y5x">案内Almighty</a></button>
@@ -106,7 +192,10 @@ margin-right:auto;
             <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/13ouW7XGxJzF1-r3SYWNxunScgjHBdpEw3g-UGxdz9yk/edit?gid=1146854828#gid=1146854828">最強企画検索</a></button>
             <button class="big-btn"><a href="https://docs.google.com/document/u/0/d/1CBxAZdh7-s-b2gXoJcvXBUF-JHGB8SQvzvf6PFjrRP8/mobilebasic">よく聞かれる企画</a></button>
             <button class="big-btn"><a href="https://docs.google.com/document/d/1BtBYJQ555KlB6dmCU1NJg18hz9NTiuSZj8JrzVJ9Ik0/edit?tab=t.0">整理券配布情報</a></button>
-            <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/15RtFzaWbCB5dy2c3juz8_lkEpl0H0nL6Cm0lshHXqnk/edit?gid=997701528#gid=997701528">配布物管理スプシ</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/15RtFzaWbCB5dy2c3juz8_lkEpl0H0nL6Cm0lshHXqnk/edit?gid=997701528#gid=997701528">rallyヒント</a></button>
+            <button class="big-btn"><a id="hourlyText" class="hourly-text" href="https://docs.google.com/spreadsheets/d/15RtFzaWbCB5dy2c3juz8_lkEpl0H0nL6Cm0lshHXqnk/edit?gid=997701528#gid=997701528">配布物管理スプシ</a></button>
+            <button class="big-btn"><a id="hourlyText" class="hourly-text" href="https://docs.google.com/spreadsheets/d/15RtFzaWbCB5dy2c3juz8_lkEpl0H0nL6Cm0lshHXqnk/edit?gid=997701528#gid=997701528">正門来場者カウント</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/15RtFzaWbCB5dy2c3juz8_lkEpl0H0nL6Cm0lshHXqnk/edit?gid=997701528#gid=997701528">車椅子・ベビーカー</a></button>
             <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/1TgCCbkisWwEHtDZQ153kQvZOHVAH4GlQhwVnLXgYKpM/edit?gid=893294887#gid=893294887">unit原簿</a></button>
             <button class="big-btn"><a href="https://system.komabasai.net/jimtem/76">JIMTEM</a></button>
         </div>
