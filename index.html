@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Neumorphic Button Only</title>
+    <style>
+        :root {
+            --bg: #eef6f6;
+            --surface: #f6fbfb;
+            --muted: #b7b7b7;
+            --shadow-1: rgba(0, 0, 0, 0.12);
+            --shadow-2: rgba(255, 255, 255, 0.9);
+        }
+
+        .wcontainer {
+            display: flex;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .big-btn {
+            padding: 18px 48px;
+            border-radius: 40px;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--muted);
+            background: linear-gradient(180deg, #f7fbfb, #f0f6f6);
+            box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.12), -8px -8px 18px rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .big-btn:active {
+            transform: translateY(2px);
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.12), -4px -4px 8px rgba(255, 255, 255, 0.9);
+        }
+
+        a {
+            color: #204260;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        a:hover {
+            color: #CE4C40;
+            transition-duration: 0.5s;
+            opacity: 0.8;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            padding: 48px;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            box-sizing: border-box;
+
+        }
+
+        @media (max-width:900px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+                padding: 32px;
+            }
+        }
+        .header-box{
+margin-top:20px;
+margin-bottom:20px;
+padding:22px 48px;
+border-radius:40px;
+font-size:28px;
+font-weight:700;
+text-align:center;
+color:var(--muted);
+background: linear-gradient(180deg, #f7fbfb, #f0f6f6);
+box-shadow: 12px 12px 24px rgba(0,0,0,0.12), -8px -8px 18px rgba(255,255,255,0.95);
+border:1px solid rgba(0,0,0,0.02);
+width:fit-content;
+margin-left:auto;
+margin-right:auto;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="header-box">Guide Menu</div>
+    <div class="wcontainer">
+        <div class="container">
+            <button class="big-btn"><a href="https://docs.google.com/document/d/1CKngeN0fH1HIMq9Kzo2bHrSYnxzN3QBcgnOjU2zRURQ/edit?tab=t.0#heading=h.bn6nydyv4y5x">案内Almighty</a></button>
+            <button class="big-btn"><a href="https://www.komabasai.net/76/visitor/project">企画検索</a></button>
+            <button class="big-btn"><a href="https://internal.komabasai.net/76/lostem">LOSTEM</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/13ouW7XGxJzF1-r3SYWNxunScgjHBdpEw3g-UGxdz9yk/edit?gid=1146854828#gid=1146854828">最強企画検索</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/document/u/0/d/1CBxAZdh7-s-b2gXoJcvXBUF-JHGB8SQvzvf6PFjrRP8/mobilebasic">よく聞かれる企画</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/document/d/1BtBYJQ555KlB6dmCU1NJg18hz9NTiuSZj8JrzVJ9Ik0/edit?tab=t.0">整理券配布情報</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/15RtFzaWbCB5dy2c3juz8_lkEpl0H0nL6Cm0lshHXqnk/edit?gid=997701528#gid=997701528">配布物管理スプシ</a></button>
+            <button class="big-btn"><a href="https://docs.google.com/spreadsheets/d/1TgCCbkisWwEHtDZQ153kQvZOHVAH4GlQhwVnLXgYKpM/edit?gid=893294887#gid=893294887">unit原簿</a></button>
+            <button class="big-btn"><a href="https://system.komabasai.net/jimtem/76">JIMTEM</a></button>
+        </div>
+    </div>
+
+</body>
+
+</html>
