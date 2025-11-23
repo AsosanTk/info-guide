@@ -28,7 +28,7 @@
 
   // 毎時0分に呼ばれる関数（色を変えてクリックで戻せる状態にする）
   function applyHourlyColor() {
-    const newColor = E8CD7D;
+    const newColor = [232,205,125];
     el.style.color = newColor;
     canRevert = true;
     const now = new Date();
@@ -62,7 +62,7 @@
     }
 
     // もし今が top-of-hour で即時発火させたなら、以降の setInterval も開始する
-    if (now.getMinutes() === 41 && now.getSeconds() === 0) {
+    if (now.getMinutes() === 47 && now.getSeconds() === 0) {
       // 次回はちょうど1時間後
       setInterval(applyHourlyColor, 60 * 60 * 1000);
       status.textContent = `色を即時変更しました（${now.toLocaleString()}）。次は1時間後です。`;
